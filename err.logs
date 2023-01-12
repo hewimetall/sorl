@@ -1,0 +1,157 @@
+WARNING: --write-unchanged-files/-W implies -w.
+RefactoringTool: Adding transformation: apply
+RefactoringTool: Adding transformation: asserts
+RefactoringTool: Adding transformation: basestring
+RefactoringTool: Skipping optional fixer: buffer
+RefactoringTool: Adding transformation: dict
+RefactoringTool: Adding transformation: except
+RefactoringTool: Adding transformation: exec
+RefactoringTool: Adding transformation: execfile
+RefactoringTool: Adding transformation: exitfunc
+RefactoringTool: Adding transformation: filter
+RefactoringTool: Adding transformation: funcattrs
+RefactoringTool: Adding transformation: future
+RefactoringTool: Adding transformation: getcwdu
+RefactoringTool: Adding transformation: has_key
+RefactoringTool: Adding transformation: idioms
+RefactoringTool: Adding transformation: import
+RefactoringTool: Adding transformation: imports
+RefactoringTool: Adding transformation: imports2
+RefactoringTool: Adding transformation: input
+RefactoringTool: Adding transformation: intern
+RefactoringTool: Adding transformation: isinstance
+RefactoringTool: Adding transformation: itertools
+RefactoringTool: Adding transformation: itertools_imports
+RefactoringTool: Adding transformation: long
+RefactoringTool: Adding transformation: map
+RefactoringTool: Adding transformation: metaclass
+RefactoringTool: Adding transformation: methodattrs
+RefactoringTool: Adding transformation: ne
+RefactoringTool: Adding transformation: next
+RefactoringTool: Adding transformation: nonzero
+RefactoringTool: Adding transformation: numliterals
+RefactoringTool: Adding transformation: operator
+RefactoringTool: Adding transformation: paren
+RefactoringTool: Adding transformation: print
+RefactoringTool: Adding transformation: raise
+RefactoringTool: Adding transformation: raw_input
+RefactoringTool: Adding transformation: reduce
+RefactoringTool: Adding transformation: reload
+RefactoringTool: Adding transformation: renames
+RefactoringTool: Adding transformation: repr
+RefactoringTool: Skipping optional fixer: set_literal
+RefactoringTool: Adding transformation: standarderror
+RefactoringTool: Adding transformation: sys_exc
+RefactoringTool: Adding transformation: throw
+RefactoringTool: Adding transformation: tuple_params
+RefactoringTool: Adding transformation: types
+RefactoringTool: Adding transformation: unicode
+RefactoringTool: Adding transformation: urllib
+RefactoringTool: Skipping optional fixer: ws_comma
+RefactoringTool: Adding transformation: xrange
+RefactoringTool: Adding transformation: xreadlines
+RefactoringTool: Adding transformation: zip
+RefactoringTool: Descending into sorl
+RefactoringTool: Refactoring sorl/__init__.py
+RefactoringTool: No changes to sorl/__init__.py
+RefactoringTool: No changes to sorl/__init__.py
+RefactoringTool: Wrote changes to sorl/__init__.py
+RefactoringTool: Descending into sorl/__pycache__
+RefactoringTool: Descending into sorl/thumbnail
+RefactoringTool: Refactoring sorl/thumbnail/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/__init__.py
+RefactoringTool: Wrote changes to sorl/thumbnail/__init__.py
+RefactoringTool: Refactoring sorl/thumbnail/base.py
+RefactoringTool: Refactored sorl/thumbnail/base.py
+RefactoringTool: Wrote changes to sorl/thumbnail/base.py
+RefactoringTool: Refactoring sorl/thumbnail/defaults.py
+RefactoringTool: No changes to sorl/thumbnail/defaults.py
+RefactoringTool: No changes to sorl/thumbnail/defaults.py
+RefactoringTool: Wrote changes to sorl/thumbnail/defaults.py
+RefactoringTool: Refactoring sorl/thumbnail/fields.py
+RefactoringTool: Refactored sorl/thumbnail/fields.py
+RefactoringTool: Wrote changes to sorl/thumbnail/fields.py
+RefactoringTool: Refactoring sorl/thumbnail/main.py
+RefactoringTool: Refactored sorl/thumbnail/main.py
+RefactoringTool: Wrote changes to sorl/thumbnail/main.py
+RefactoringTool: Refactoring sorl/thumbnail/models.py
+RefactoringTool: No changes to sorl/thumbnail/models.py
+RefactoringTool: No changes to sorl/thumbnail/models.py
+RefactoringTool: Wrote changes to sorl/thumbnail/models.py
+RefactoringTool: Refactoring sorl/thumbnail/processors.py
+RefactoringTool: Refactored sorl/thumbnail/processors.py
+RefactoringTool: Wrote changes to sorl/thumbnail/processors.py
+RefactoringTool: Refactoring sorl/thumbnail/utils.py
+RefactoringTool: Refactored sorl/thumbnail/utils.py
+RefactoringTool: Wrote changes to sorl/thumbnail/utils.py
+RefactoringTool: Descending into sorl/thumbnail/__pycache__
+RefactoringTool: Descending into sorl/thumbnail/management
+RefactoringTool: Refactoring sorl/thumbnail/management/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/management/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/management/__init__.py
+RefactoringTool: Wrote changes to sorl/thumbnail/management/__init__.py
+RefactoringTool: Descending into sorl/thumbnail/management/__pycache__
+RefactoringTool: Descending into sorl/thumbnail/management/commands
+RefactoringTool: Refactoring sorl/thumbnail/management/commands/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/management/commands/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/management/commands/__init__.py
+RefactoringTool: Wrote changes to sorl/thumbnail/management/commands/__init__.py
+RefactoringTool: Refactoring sorl/thumbnail/management/commands/thumbnail_cleanup.py
+RefactoringTool: No changes to sorl/thumbnail/management/commands/thumbnail_cleanup.py
+RefactoringTool: No changes to sorl/thumbnail/management/commands/thumbnail_cleanup.py
+RefactoringTool: Wrote changes to sorl/thumbnail/management/commands/thumbnail_cleanup.py
+RefactoringTool: Descending into sorl/thumbnail/management/commands/__pycache__
+RefactoringTool: Descending into sorl/thumbnail/templatetags
+RefactoringTool: Refactoring sorl/thumbnail/templatetags/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/templatetags/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/templatetags/__init__.py
+RefactoringTool: Wrote changes to sorl/thumbnail/templatetags/__init__.py
+RefactoringTool: Refactoring sorl/thumbnail/templatetags/thumbnail.py
+RefactoringTool: Refactored sorl/thumbnail/templatetags/thumbnail.py
+RefactoringTool: Wrote changes to sorl/thumbnail/templatetags/thumbnail.py
+RefactoringTool: Descending into sorl/thumbnail/templatetags/__pycache__
+RefactoringTool: Descending into sorl/thumbnail/tests
+RefactoringTool: Refactoring sorl/thumbnail/tests/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/tests/__init__.py
+RefactoringTool: No changes to sorl/thumbnail/tests/__init__.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/__init__.py
+RefactoringTool: Refactoring sorl/thumbnail/tests/base.py
+RefactoringTool: Refactored sorl/thumbnail/tests/base.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/base.py
+RefactoringTool: Refactoring sorl/thumbnail/tests/classes.py
+RefactoringTool: Refactored sorl/thumbnail/tests/classes.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/classes.py
+RefactoringTool: Refactoring sorl/thumbnail/tests/fields.py
+RefactoringTool: Refactored sorl/thumbnail/tests/fields.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/fields.py
+RefactoringTool: Refactoring sorl/thumbnail/tests/templatetags.py
+RefactoringTool: No changes to sorl/thumbnail/tests/templatetags.py
+RefactoringTool: No changes to sorl/thumbnail/tests/templatetags.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/templatetags.py
+RefactoringTool: Refactoring sorl/thumbnail/tests/utils.py
+RefactoringTool: No changes to sorl/thumbnail/tests/utils.py
+RefactoringTool: No changes to sorl/thumbnail/tests/utils.py
+RefactoringTool: Wrote changes to sorl/thumbnail/tests/utils.py
+RefactoringTool: Descending into sorl/thumbnail/tests/__pycache__
+RefactoringTool: Files that were modified:
+RefactoringTool: sorl/__init__.py
+RefactoringTool: sorl/thumbnail/__init__.py
+RefactoringTool: sorl/thumbnail/base.py
+RefactoringTool: sorl/thumbnail/defaults.py
+RefactoringTool: sorl/thumbnail/fields.py
+RefactoringTool: sorl/thumbnail/main.py
+RefactoringTool: sorl/thumbnail/models.py
+RefactoringTool: sorl/thumbnail/processors.py
+RefactoringTool: sorl/thumbnail/utils.py
+RefactoringTool: sorl/thumbnail/management/__init__.py
+RefactoringTool: sorl/thumbnail/management/commands/__init__.py
+RefactoringTool: sorl/thumbnail/management/commands/thumbnail_cleanup.py
+RefactoringTool: sorl/thumbnail/templatetags/__init__.py
+RefactoringTool: sorl/thumbnail/templatetags/thumbnail.py
+RefactoringTool: sorl/thumbnail/tests/__init__.py
+RefactoringTool: sorl/thumbnail/tests/base.py
+RefactoringTool: sorl/thumbnail/tests/classes.py
+RefactoringTool: sorl/thumbnail/tests/fields.py
+RefactoringTool: sorl/thumbnail/tests/templatetags.py
+RefactoringTool: sorl/thumbnail/tests/utils.py

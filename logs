@@ -1,0 +1,294 @@
+--- sorl/thumbnail/base.py	(original)
++++ sorl/thumbnail/base.py	(refactored)
+@@ -73,7 +73,7 @@
+         if not self.dest:
+             raise ThumbnailException("No destination filename set.")
+ 
+-        if not isinstance(self.dest, basestring):
++        if not isinstance(self.dest, str):
+             # We'll assume dest is a file-like instance if it exists but isn't
+             # a string.
+             self._do_generate()
+@@ -94,7 +94,7 @@
+         """
+         if not hasattr(self, '_source_exists'):
+             self._source_exists = (self.source and
+-                                   (not isinstance(self.source, basestring) or
++                                   (not isinstance(self.source, str) or
+                                     isfile(self.source)))
+         return self._source_exists
+     source_exists = property(_check_source_exists)
+@@ -105,7 +105,7 @@
+         if import error it will just use the extension
+         """
+         if not hasattr(self, '_source_filetype'):
+-            if not isinstance(self.source, basestring):
++            if not isinstance(self.source, str):
+                 # Assuming a file-like object - we won't know it's type.
+                 return None
+             try:
+@@ -138,7 +138,7 @@
+         if not hasattr(self, '_data'):
+             try:
+                 self._data = Image.open(self.dest)
+-            except IOError, detail:
++            except IOError as detail:
+                 raise ThumbnailException(detail)
+         return self._data
+ 
+@@ -166,7 +166,7 @@
+         else:
+             try:
+                 self._source_data = Image.open(image)
+-            except IOError, detail:
++            except IOError as detail:
+                 raise ThumbnailException("%s: %s" % (detail, image))
+             except MemoryError:
+                 raise ThumbnailException("Memory Error: %s" % image)
+@@ -183,7 +183,7 @@
+             p = subprocess.Popen((self.wvps_path, filename, tmp),
+                                  stdout=subprocess.PIPE)
+             p.wait()
+-        except OSError, detail:
++        except OSError as detail:
+             os.remove(tmp)
+             raise ThumbnailException('wvPS error: %s' % detail)
+         self._convert_imagemagick(tmp)
+@@ -205,7 +205,7 @@
+                 '-antialias', '-colorspace', 'rgb', '-format', 'PNG24',
+                 '%s[0]' % filename, tmp), stdout=subprocess.PIPE)
+             p.wait()
+-        except OSError, detail:
++        except OSError as detail:
+             os.remove(tmp)
+             raise ThumbnailException('ImageMagick error: %s' % detail)
+         self.source_data = tmp
+@@ -225,7 +225,7 @@
+ 
+         self.data = im
+ 
+-        filelike = not isinstance(self.dest, basestring)
++        filelike = not isinstance(self.dest, str)
+         if not filelike:
+             dest_extension = os.path.splitext(self.dest)[1][1:]
+             format = None
+@@ -244,7 +244,7 @@
+                 # larger than ImageFile.MAXBLOCK, which is 64k by default)
+                 try:
+                     im.save(self.dest, format=format, quality=self.quality)
+-                except IOError, detail:
++                except IOError as detail:
+                     raise ThumbnailException(detail)
+ 
+         if filelike:
+--- sorl/thumbnail/fields.py	(original)
++++ sorl/thumbnail/fields.py	(refactored)
+@@ -1,8 +1,8 @@
+ from UserDict import DictMixin
+ try:
+-    from cStringIO import StringIO
++    from io import StringIO
+ except ImportError:
+-    from StringIO import StringIO
++    from io import StringIO
+ 
+ from django.db.models.fields.files import ImageField, ImageFieldFile
+ from django.core.files.base import ContentFile
+@@ -38,7 +38,7 @@
+         self.descriptor = descriptor
+ 
+     def keys(self):
+-        return self.descriptor.field.extra_thumbnails.keys()
++        return list(self.descriptor.field.extra_thumbnails.keys())
+ 
+ 
+ class LazyThumbs(ThumbsDict):
+@@ -55,7 +55,7 @@
+         return thumb
+ 
+     def keys(self):
+-        return self.descriptor.field.extra_thumbnails.keys()
++        return list(self.descriptor.field.extra_thumbnails.keys())
+ 
+ 
+ class ThumbTags(ThumbsDict):
+@@ -68,7 +68,7 @@
+     def _build_thumbnail(self, args):
+         # Build the DjangoThumbnail kwargs.
+         kwargs = {}
+-        for k, v in args.items():
++        for k, v in list(args.items()):
+             kwargs[ALL_ARGS[k]] = v
+         # Build the destination filename and return the thumbnail.
+         name_kwargs = {}
+@@ -114,7 +114,7 @@
+     def generate_thumbnails(self):
+         # Getting the thumbs generates them.
+         if self.extra_thumbnails:
+-            self.extra_thumbnails.values()
++            list(self.extra_thumbnails.values())
+ 
+ 
+ class ImageWithThumbnailsFieldFile(BaseThumbnailFieldFile):
+@@ -137,7 +137,7 @@
+         new_content = StringIO()
+         # Build the Thumbnail kwargs.
+         thumbnail_kwargs = {}
+-        for k, argk in BASE_ARGS.items():
++        for k, argk in list(BASE_ARGS.items()):
+             if not k in self.field.thumbnail:
+                 continue
+             thumbnail_kwargs[argk] = self.field.thumbnail[k]
+@@ -164,7 +164,7 @@
+         super(BaseThumbnailField, self).__init__(*args, **kwargs)
+         _verify_thumbnail_attrs(self.thumbnail)
+         if self.extra_thumbnails:
+-            for extra, attrs in self.extra_thumbnails.items():
++            for extra, attrs in list(self.extra_thumbnails.items()):
+                 name = "%r of 'extra_thumbnails'"
+                 _verify_thumbnail_attrs(attrs, name)
+ 
+--- sorl/thumbnail/main.py	(original)
++++ sorl/thumbnail/main.py	(refactored)
+@@ -41,8 +41,7 @@
+     if isinstance(options, (list, tuple)):
+         options = dict([(opt, None) for opt in options])
+ 
+-    opts = options.items()
+-    opts.sort()   # options are sorted so the filename is consistent
++    opts = sorted(list(options.items()))
+     opts = ['%s_' % (v is not None and '%s-%s' % (k, v) or k)
+             for k, v in opts]
+     opts = ''.join(opts)
+@@ -81,7 +80,7 @@
+                self._get_relative_thumbnail(relative_source, basedir=basedir,
+                                             subdir=subdir, prefix=prefix,
+                                             extension=extension)
+-        filelike = not isinstance(relative_dest, basestring)
++        filelike = not isinstance(relative_dest, str)
+         if filelike:
+             self.dest = relative_dest
+         else:
+--- sorl/thumbnail/processors.py	(original)
++++ sorl/thumbnail/processors.py	(refactored)
+@@ -72,9 +72,9 @@
+             ex, ey = dx / 2, dy / 2
+             box = [ex, ey, x - ex, y - ey]
+             # See if an edge cropping argument was provided.
+-            edge_crop = (isinstance(crop, basestring) and
++            edge_crop = (isinstance(crop, str) and
+                            re.match(r'(?:(-?)(\d+))?,(?:(-?)(\d+))?$', crop))
+-            if edge_crop and filter(None, edge_crop.groups()):
++            if edge_crop and [_f for _f in edge_crop.groups() if _f]:
+                 x_right, x_crop, y_bottom, y_crop = edge_crop.groups()
+                 if x_crop:
+                     offset = min(x * int(x_crop) / 100, dx)
+--- sorl/thumbnail/utils.py	(original)
++++ sorl/thumbnail/utils.py	(refactored)
+@@ -133,7 +133,7 @@
+     only remove from the path directory, set recursive=False.
+     """
+     total = 0
+-    for thumbs in all_thumbnails(path, recursive=recursive).values():
++    for thumbs in list(all_thumbnails(path, recursive=recursive).values()):
+         total += _delete_using_thumbs_list(thumbs)
+     return total
+ 
+--- sorl/thumbnail/templatetags/thumbnail.py	(original)
++++ sorl/thumbnail/templatetags/thumbnail.py	(refactored)
+@@ -61,7 +61,7 @@
+         # Size variable can be either a tuple/list of two integers or a valid
+         # string, only the string is checked.
+         else:
+-            if isinstance(requested_size, basestring):
++            if isinstance(requested_size, str):
+                 m = size_pat.match(requested_size)
+                 if m:
+                     requested_size = (int(m.group(1)), int(m.group(2)))
+@@ -76,10 +76,10 @@
+         else:
+             try:
+                 kwargs = {}
+-                for key, value in self.kwargs.items():
++                for key, value in list(self.kwargs.items()):
+                     kwargs[key] = value.resolve(context)
+                 opts = dict([(k, v and v.resolve(context))
+-                             for k, v in self.opts.items()])
++                             for k, v in list(self.opts.items())])
+                 thumbnail = DjangoThumbnail(relative_source, requested_size,
+                                 opts=opts, processors=PROCESSORS, **kwargs)
+             except:
+@@ -139,7 +139,7 @@
+     size_var = parser.compile_filter(args[2])
+ 
+     # Get the options.
+-    args_list = split_args(args[3:]).items()
++    args_list = list(split_args(args[3:]).items())
+ 
+     # Check the options.
+     opts = {}
+@@ -197,7 +197,7 @@
+         return bytes
+     # Check for valid bytes
+     try:
+-        bytes = long(bytes)
++        bytes = int(bytes)
+     except (ValueError, TypeError):
+         return bytes
+ 
+--- sorl/thumbnail/tests/base.py	(original)
++++ sorl/thumbnail/tests/base.py	(refactored)
+@@ -33,7 +33,7 @@
+     def change(self, override=None):
+         if override is not None:
+             self.default_settings.update(override)
+-        for setting, default in self.default_settings.items():
++        for setting, default in list(self.default_settings.items()):
+             settings_s = 'THUMBNAIL_%s' % setting
+             self_s = 'original_%s' % setting
+             if hasattr(settings, settings_s) and not hasattr(self, self_s):
+@@ -74,9 +74,9 @@
+         else:
+             thumb_name = expected_filename
+ 
+-        if isinstance(thumb_name, basestring):
++        if isinstance(thumb_name, str):
+             # Verify that the thumbnail file exists
+-            self.assert_(os.path.isfile(thumb_name),
++            self.assertTrue(os.path.isfile(thumb_name),
+                          'Thumbnail file not found')
+ 
+             # Remember to delete the file
+--- sorl/thumbnail/tests/classes.py	(original)
++++ sorl/thumbnail/tests/classes.py	(refactored)
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ import os
+ import time
+-from StringIO import StringIO
++from io import StringIO
+ 
+ from PIL import Image
+ from django.conf import settings
+--- sorl/thumbnail/tests/fields.py	(original)
++++ sorl/thumbnail/tests/fields.py	(refactored)
+@@ -73,7 +73,7 @@
+         model = TestThumbnailFieldModel(photo=RELATIVE_PIC_NAME)
+         thumb_file = model.photo.thumbnail.dest
+         open(thumb_file, 'wb').close()
+-        self.assert_(os.path.exists(thumb_file))
++        self.assertTrue(os.path.exists(thumb_file))
+         model.photo.delete(save=False)
+         self.assertFalse(os.path.exists(thumb_file))
+ 
+@@ -96,8 +96,8 @@
+         model = TestThumbnailFieldGenerateModel()
+         source = ContentFile(open(PIC_NAME).read())
+         model.photo.save(RELATIVE_PIC_NAME, source, save=False)
+-        self.assert_(os.path.exists(main_thumb))
+-        self.assert_(os.path.exists(admin_thumb))
++        self.assertTrue(os.path.exists(main_thumb))
++        self.assertTrue(os.path.exists(admin_thumb))
+ 
+ 
+ class ImageWithThumbnailsFieldTest(BaseTest):
